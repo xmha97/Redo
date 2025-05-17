@@ -73,8 +73,7 @@
                     Glyph="&#xE713;" />
                 <Button.Flyout>
                     <MenuFlyout>
-                        <MenuFlyoutItem Text="Open" />
-                        <MenuFlyoutItem Text="Save" />
+                        <MenuFlyoutItem Text="N/A" />
                     </MenuFlyout>
                 </Button.Flyout>
             </Button>

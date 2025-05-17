@@ -4,11 +4,13 @@ using Redo.Libs;
 using System.Reflection.Metadata;
 using static Redo.Libs.WindowAPI;
 using Microsoft.UI.Xaml;
+using System.Collections.Generic;
 
 namespace Redo.Helpers
 {
     internal class WindowHelper
     {
+        static private List<Window> _activeWindows = new List<Window>();
         public static void HideWindow(object Window)
         {
             // Get the native window handle (HWND) from the WinUI 3 window
@@ -40,5 +42,6 @@ namespace Redo.Helpers
 
             if (taskbarSupported) taskbarInstance.SetProgressValue(hWnd, (ulong)progressValue, (ulong)progressMax);
         }
+
     }
 }

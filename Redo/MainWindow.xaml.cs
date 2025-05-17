@@ -5,6 +5,17 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Windows.Graphics;
 using Windows.UI;
+using System.Collections.Generic;
+using Windows.Storage.Pickers;
+using Windows.Storage;
+using System.IO;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using Microsoft.UI.Xaml.Documents;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Storage.AccessCache;
+using Windows.Storage.Provider;
 using Redo.Helpers;
 
 namespace Redo
@@ -66,7 +77,7 @@ namespace Redo
             RecordToggleAction();
         }
 
-        private void RecordToggleAction()
+        private async void RecordToggleAction()
         {
             if (WorkMode.Equals(WorkModes.Ready))
             {
@@ -82,15 +93,43 @@ namespace Redo
             }
             else
             {
+
+                //disable the button to avoid double-clicking
+                recordButton.IsEnabled = false;
+
                 MediaHelper.RedoPlaySounds(false);
                 WorkMode = WorkModes.Ready;
-                playButton.IsEnabled = true;
-                settingsButton.IsEnabled = true;
                 recordIconFadeStoryboard.Stop();
                 recordFontIcon.Foreground = new SolidColorBrush((Color)Application.Current.Resources["SystemAccentColor"]);
                 recordButton.ClearValue(Button.BackgroundProperty);
                 _timer.Stop();
-                System.IO.File.WriteAllText("Output.ahk", OutputFile);
+
+                // Create a file picker
+                FileSavePicker savePicker = new Windows.Storage.Pickers.FileSavePicker();
+
+                // Retrieve the window handle (HWND) of the current WinUI 3 window.
+                var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+
+                // Initialize the file picker with the window handle (HWND).
+                WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hWnd);
+
+                // Set options for your file picker
+                savePicker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+                // Dropdown of file types the user can save the file as
+                savePicker.FileTypeChoices.Add("AutoHotkey Script", new List<string>() { ".ahk" });
+                // Default file name if the user does not type one in or select a file to replace
+                savePicker.SuggestedFileName = "Redo.ahk";
+
+                // Open the picker for the user to pick a file
+                StorageFile file = await savePicker.PickSaveFileAsync();
+                if (file != null)
+                {
+                    System.IO.File.WriteAllText(file.Path, OutputFile);
+                }
+
+                recordButton.IsEnabled = true;
+                playButton.IsEnabled = true;
+                settingsButton.IsEnabled = true;
             }
         }
 
