@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="Redo.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Redo"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Redo">
+    <Window.SystemBackdrop>
+        <DesktopAcrylicBackdrop />
+    </Window.SystemBackdrop>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Storyboard x:Name="recordIconFadeStoryboard" RepeatBehavior="Forever">
+                <DoubleAnimation
+            Storyboard.TargetName="recordFontIcon"
+            Storyboard.TargetProperty="Opacity"
+            From="1" To="0"
+            Duration="0:0:0.3"
+            AutoReverse="True" />
+            </Storyboard>
+            <Storyboard x:Name="playIconFadeStoryboard" RepeatBehavior="Forever">
+                <DoubleAnimation
+            Storyboard.TargetName="playFontIcon"
+            Storyboard.TargetProperty="Opacity"
+            From="1" To="0"
+            Duration="0:0:0.3"
+            AutoReverse="True" />
+            </Storyboard>
+        </Grid.Resources>
+        <Grid x:Name="titleBar">
+            <Grid.Background>
+                <SolidColorBrush Color="{ThemeResource SubtleFillColorSecondary}" />
+            </Grid.Background>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- <Image
+                Width="16"
+                Margin="12,0,0,0"
+                AutomationProperties.AccessibilityView="Raw"
+                Source="Redo.ico" /> -->
+            <Rectangle
+                Grid.ColumnSpan="2"
+                Width="30"
+                Height="3"
+                HorizontalAlignment="Center"
+                Fill="{ThemeResource ControlStrongFillColorDefaultBrush}"
+                RadiusX="2"
+                RadiusY="2" />
+        </Grid>
+        <StackPanel x:Name="mainStackPanel"
+                    Grid.Row="1"
+                    x:FieldModifier="public"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Center"
+                    Orientation="Horizontal">
+            <Button
+                x:Name="settingsButton"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                ToolTipService.ToolTip="Settings">
+                <FontIcon
+                    x:Name="settingsFontIcon"
+                    FontSize="14"
+                    Glyph="&#xE713;" />
+                <Button.Flyout>
+                    <MenuFlyout>
+                        <MenuFlyoutItem Text="Open" />
+                        <MenuFlyoutItem Text="Save" />
+                    </MenuFlyout>
+                </Button.Flyout>
+            </Button>
+            <Button
+                x:Name="recordButton"
+                Margin="8,0,8,0"
+                Width="48"
+                Height="48"
+                CornerRadius="24"
+                ToolTipService.ToolTip="Record"
+                Click="RecordButton_Click">
+                <FontIcon
+                    x:Name="recordFontIcon"
+                    FontSize="22"
+                    Foreground="{ThemeResource SystemAccentColor}"
+                    Glyph="&#xE7C8;" />
+            </Button>
+            <Button
+                x:Name="playButton"
+                Background="Transparent"
+                BorderBrush="Transparent"
+                ToolTipService.ToolTip="Play"
+                Click="PlayButton_Click">
+                <FontIcon
+                    x:Name="playFontIcon"
+                    FontSize="14"
+                    Glyph="&#xE768;" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

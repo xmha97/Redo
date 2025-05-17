@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Redo (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Redo (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
