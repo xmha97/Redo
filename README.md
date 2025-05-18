@@ -15,3 +15,5 @@ Redo is a tool which help you to record mouse click and automate the activity by
 ### Via GitHub with EXE [Recommended]
 
 Go to the [Redo GitHub releases page][github-release-link] and click on `Assets` at the bottom to show the files available in the release.
+
+[github-release-link]: https://github.com/xmha97/Redo/releases
